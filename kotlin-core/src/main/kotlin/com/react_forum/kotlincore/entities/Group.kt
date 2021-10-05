@@ -1,28 +1,28 @@
-package com.react_forum.entities
+package com.react_forum.kotlincore.entities
 
-import javx.persistence.Table
-import javx.persistence.Entity
-import javx.persistence.Column
-
+import javax.persistence.*
 
 
 @Entity
 @Table(name="groups")
 class Group(
-    
-    @Id
-    @Column(name="id")
-    @GeneratedValue(strategy=GenerationType.Auto)
-    var id: Int
 
     @Column(name="name")
-    @NotNull
-    var name: String
+    val name: String,
 
     @Column(name="users")
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    var users: MutableSet<User> = mutableSetOf()
+    @ManyToMany(cascade = [CascadeType.PERSIST, CascadeType.MERGE])
+    val users: MutableSet<User> = mutableSetOf(),
 
-) {
-    
+    @Column(name="categories")
+    @OneToMany(mappedBy = "group", cascade = [CascadeType.ALL], orphanRemoval = true)
+    val categories: MutableSet<Category> = mutableSetOf(),
+
+): AbstractJpaEntity() {
+
+    //addUser
+    //removeUser
+    //addCategory
+    //removeCategory
+
 }
