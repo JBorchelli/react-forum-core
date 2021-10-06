@@ -9,8 +9,8 @@ import javax.persistence.ManyToOne
 @Table(name="posts")
 class Post(
 
-    @Column(name="text")
-    var text: String,
+    @Column(name="content")
+    var content: String,
 
     @Column(name="user")
     @ManyToOne

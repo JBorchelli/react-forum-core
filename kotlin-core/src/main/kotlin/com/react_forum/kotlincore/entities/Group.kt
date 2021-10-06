@@ -1,6 +1,11 @@
 package com.react_forum.kotlincore.entities
 
-import javax.persistence.*
+import javax.persistence.Entity
+import javax.persistence.Table
+import javax.persistence.Column
+import javax.persistence.ManyToMany
+import javax.persistence.CascadeType
+import javax.persistence.OneToMany
 
 
 @Entity
@@ -15,7 +20,7 @@ class Group(
     val users: MutableSet<User> = mutableSetOf(),
 
     @Column(name="categories")
-    @OneToMany(mappedBy = "group", cascade = [CascadeType.ALL], orphanRemoval = true)
+    @OneToMany(mappedBy = "group", cascade = [CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH], orphanRemoval = true)
     val categories: MutableSet<Category> = mutableSetOf(),
 
 ): AbstractJpaEntity() {

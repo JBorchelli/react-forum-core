@@ -4,7 +4,11 @@ import org.springframework.data.util.ProxyUtils
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
+import javax.persistence.Column
 import javax.persistence.MappedSuperclass
+
+import org.hibernate.annotations.GenericGenerator
+import org.hibernate.annotations.Parameter
 
 @MappedSuperclass
 abstract class AbstractJpaEntity {
@@ -14,7 +18,21 @@ abstract class AbstractJpaEntity {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(
+        strategy = GenerationType.SEQUENCE,
+        generator = "pooled-lo"
+    )
+    @GenericGenerator(
+        name = "pooled-lo",
+        strategy = "sequence",
+        parameters = [
+            Parameter(name = "sequence_name", value = "post_sequence"),
+            Parameter(name = "initial_value", value = "1"),
+            Parameter(name = "increment_size", value = "1"),
+            Parameter(name = "optimizer", value = "pooled-lo")
+        ]
+    )
+    @Column(name = "id")
     private var id: Int? = null
 
     fun getId(): Int? {

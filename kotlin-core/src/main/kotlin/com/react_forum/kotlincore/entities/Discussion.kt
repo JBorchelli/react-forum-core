@@ -14,13 +14,13 @@ class Discussion(
     @Column(name="heading")
     var heading: String,
 
-    @Column(name="text")
-    var text: String?,
+    @Column(name="sub")
+    var sub: String?,
 
     @ManyToOne
     var category: Category,
 
-    @OneToMany(mappedBy ="discussion", cascade = [CascadeType.ALL])
+    @OneToMany(mappedBy ="discussion", cascade = [CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH])
     var posts: MutableSet<Post> = mutableSetOf(),
 
 ): AbstractJpaEntity() {
