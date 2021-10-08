@@ -4,6 +4,7 @@ import javax.persistence.Table
 import javax.persistence.Entity
 import javax.persistence.Column
 import javax.persistence.ManyToOne
+import javax.persistence.JoinColumn
 
 @Entity
 @Table(name="posts")
@@ -12,11 +13,11 @@ class Post(
     @Column(name="content")
     var content: String,
 
-    @Column(name="user")
+    @JoinColumn(name="user_id")
     @ManyToOne
     var user: User,
 
-    @Column(name="discussion")
+    @JoinColumn(name="discussion_id")
     @ManyToOne
     var discussion: Discussion,
 

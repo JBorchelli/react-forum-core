@@ -1,13 +1,18 @@
-DROP TABLE IF EXISTS groups;
-DROP TABLE IF EXISTS user_groups;
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS categories;
-DROP TABLE IF EXISTS discussions;
+DROP TABLE IF EXISTS users_groups;
 DROP TABLE IF EXISTS posts;
+DROP TABLE IF EXISTS discussions;
+DROP TABLE IF EXISTS categories;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS groups;
 
 CREATE TABLE groups (
     id INTEGER PRIMARY KEY,
-    group_name text NOT NULL,
+    group_name text NOT NULL
+);
+
+CREATE TABLE users (
+    id INTEGER PRIMARY KEY,
+    username TEXT NOT NULL
 );
 
 CREATE TABLE users_groups (
@@ -20,12 +25,7 @@ CREATE TABLE users_groups (
             REFERENCES groups(id) ON DELETE CASCADE,
     CONSTRAINT fk_user_groups_user_id
         FOREIGN KEY(user_id)
-            REFERENCES users(id) ON DELETE CASCADE,
-);
-
-CREATE TABLE users (
-    id INTEGER PRIMARY KEY,
-    username TEXT NOT NULL,
+            REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE categories (
@@ -34,7 +34,7 @@ CREATE TABLE categories (
     group_id INTEGER,
     CONSTRAINT fk_categories_group_id
         FOREIGN KEY(group_id)
-            REFERENCES groups(id) ON DELETE CASCADE,
+            REFERENCES groups(id) ON DELETE CASCADE
 );
 
 CREATE TABLE discussions (
@@ -48,7 +48,7 @@ CREATE TABLE discussions (
             REFERENCES categories(id) ON DELETE CASCADE,
     CONSTRAINT fk_discussions_user_id
         FOREIGN KEY(user_id)
-            REFERENCES users(id) ON DELETE CASCADE,
+            REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE posts (
@@ -61,5 +61,5 @@ CREATE TABLE posts (
             REFERENCES discussions(id) ON DELETE CASCADE,
     CONSTRAINT fk_posts_user_id
         FOREIGN KEY(user_id)
-            REFERENCES users(id) ON DELETE CASCADE,
+            REFERENCES users(id) ON DELETE CASCADE
 );

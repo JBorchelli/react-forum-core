@@ -17,7 +17,7 @@ class User(
     @Column(name="username")
     var username: String,
 
-    @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "groups_users",
         joinColumns = [JoinColumn(name = "user_id", referencedColumnName = "id")],
