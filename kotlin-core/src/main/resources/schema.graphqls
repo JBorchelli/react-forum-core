@@ -1,0 +1,67 @@
+type Group {
+    id: ID!,
+    name: String!,
+    users: [User],
+    categories[Category]
+}
+
+type User {
+    id: ID!,
+    username: String!,
+    groups: [Group],
+    discussions: [Discussion],
+    posts: [Post]
+}
+
+type Category {
+    id: ID!,
+    title: String!,
+    group: Group,
+    discussions: [Discussion]
+}
+
+type Discussion {
+    id: ID!,
+    heading: String!,
+    sub: String,
+    category: Category,
+    posts: [Post],
+    user: User
+}
+
+type Post {
+    id: ID!,
+    content: String!,
+    user: User,
+    discussion: Discussion
+}
+
+type Query {
+    groupsByUser: [Group],
+    usersByGroup: [User],
+    categoriesByGroup: [Category],
+    discussionsByCategory: [Discussion],
+    postsByDiscussion: [Post],
+    discussionsByUser: [Discussion],
+    postsByUser: [Post]
+}
+
+type Mutation {
+    CreateGroup
+    UpdateGroupName
+    RemoveGroup
+    AddUserToGroup
+    RemoveUserFromGroup
+    UpdateUsername
+    RemoveUser
+    CreateCategory
+    UpdateCategoryTitle
+    RemoveCategory
+    CreateDiscussion
+    UpdateDiscussion
+    RemoveDiscussion
+    CreatePost
+    UpdatePost
+    RemovePost
+
+}

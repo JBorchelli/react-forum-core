@@ -33,9 +33,9 @@ abstract class AbstractJpaEntity {
         ]
     )
     @Column(name = "id")
-    private var id: Int? = null
+    private var id: Long? = null
 
-    fun getId(): Int? {
+    fun getId(): Long? {
         return id
     }
 
@@ -54,7 +54,8 @@ abstract class AbstractJpaEntity {
     }
 
     override fun hashCode(): Int {
-        return this.getId() ?: 0
+        //Need to add some hash logic to deal with ids out of int range. Perhaps just subtracting the overflow.
+        return this.getId()?.toInt() ?: 0
     }
 
     override fun toString(): String {
