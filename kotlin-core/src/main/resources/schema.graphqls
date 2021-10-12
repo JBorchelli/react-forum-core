@@ -1,3 +1,10 @@
+scalar BigInteger
+
+schema {
+    query: Query
+    mutation: Mutation
+}
+
 type Group {
     id: ID!,
     name: String!,
@@ -47,21 +54,21 @@ type Query {
 }
 
 type Mutation {
-    CreateGroup
-    UpdateGroupName
-    RemoveGroup
-    AddUserToGroup
-    RemoveUserFromGroup
-    UpdateUsername
-    RemoveUser
-    CreateCategory
-    UpdateCategoryTitle
-    RemoveCategory
-    CreateDiscussion
-    UpdateDiscussion
-    RemoveDiscussion
-    CreatePost
-    UpdatePost
-    RemovePost
-
+    createGroup(name: String!): Group 
+    updateGroupName(id: BigInteger!, name: String!): Group
+    removeGroup(id: BigInteger!): BigInteger
+    addUserToGroup(groupId: BigInteger!, userId: BigInteger!): Group
+    RemoveUserFromGroup(groupId: BigInteger!, userId: BigInteger!): Group
+    createUser(username: String!): User
+    updateUsername(userId: BigInteger!, username: String!): User
+    removeUser(userId: BigInteger!): BigInteger
+    createCategory(title: String!, groupId: BigInteger!): Category
+    updateCategoryTitle(categoryId: BigInteger!, title: String!): Category
+    removeCategory(categoryId: BigInteger!): BigInteger
+    createDiscussion(heading: String!, sub: String, categoryId: BigInteger!, userId: BigInteger!): Discussion
+    updateDiscussion(discussionId: BigInteger!, heading: String, sub String): Discussion
+    removeDiscussion(discussionId: BigInteger!): BigInteger
+    createPost(content: String!, discussionId: BigInteger!, userId: BigInteger!): Post
+    updatePost(postId: BigInteger!, content: String!): Post
+    removePost(postId: BigInteger!): BigInteger
 }
