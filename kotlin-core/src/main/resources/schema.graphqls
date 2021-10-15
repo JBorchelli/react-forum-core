@@ -56,19 +56,19 @@ type Query {
 type Mutation {
     createGroup(name: String!): Group 
     updateGroupName(id: BigInteger!, name: String!): Group
-    removeGroup(id: BigInteger!): BigInteger
+    removeGroup(id: BigInteger!): Boolean
     addUserToGroup(groupId: BigInteger!, userId: BigInteger!): Group
-    RemoveUserFromGroup(groupId: BigInteger!, userId: BigInteger!): Group
+    removeUserFromGroup(groupId: BigInteger!, userId: BigInteger!): Group
     createUser(username: String!): User
     updateUsername(userId: BigInteger!, username: String!): User
-    removeUser(userId: BigInteger!): BigInteger
+    removeUser(userId: BigInteger!): Boolean
     createCategory(title: String!, groupId: BigInteger!): Category
     updateCategoryTitle(categoryId: BigInteger!, title: String!): Category
-    removeCategory(categoryId: BigInteger!): BigInteger
+    removeCategory(categoryId: BigInteger!): Boolean
     createDiscussion(heading: String!, sub: String, categoryId: BigInteger!, userId: BigInteger!): Discussion
     updateDiscussion(discussionId: BigInteger!, heading: String, sub String): Discussion
-    removeDiscussion(discussionId: BigInteger!): BigInteger
+    removeDiscussion(discussionId: BigInteger!): Boolean
     createPost(content: String!, discussionId: BigInteger!, userId: BigInteger!): Post
     updatePost(postId: BigInteger!, content: String!): Post
-    removePost(postId: BigInteger!): BigInteger
+    removePost(postId: BigInteger!): Boolean
 }

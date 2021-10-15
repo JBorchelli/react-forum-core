@@ -10,5 +10,7 @@ import com.react_forum.kotlincore.entities.Group
  */
 @Repository
 interface GroupRepository: JpaRepository<Group, Long> {
+    
+   findByUserId(userId: Long): Iterable<Group> 
 
 }
