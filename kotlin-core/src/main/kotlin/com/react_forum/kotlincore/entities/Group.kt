@@ -21,11 +21,34 @@ class Group(
     @OneToMany(mappedBy = "group", cascade = [CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH], orphanRemoval = true)
     val categories: MutableSet<Category> = mutableSetOf(),
 
-): AbstractJpaEntity() {
+): AbstractJpaEntity()
 
-    //addUser
-    //removeUser
-    //addCategory
-    //removeCategory
+//############### Extensions ##################
 
+fun Group.addUser(user: User): Boolean {
+   return this.users.add(user)
+}
+
+fun Group.removeUser(userId: Long): Boolean {
+    val checkLength = this.users.size
+    this.users = this.users.filterNot { user -> user.id == userId }
+    return this.users.size = checkLength - 1
+}
+
+fun Group.removeUser(user: User): Boolean {
+    return this.users.remove(user)
+}
+
+fun Group.addCategory(category: Category): Boolean {
+    return this.categories.add(category)
+}
+
+fun Group.removeCategory(categoryId: Long): Boolean {
+    val checkLength = this.categories.size
+    this.categories = this.categories.filterNot { category -> category.id == categoryId }
+    return this.categories.size = checkLength - 1
+}
+
+fun Group.removeCategory(category: Category): Boolean {
+    return this.categories.remove(category)
 }
