@@ -13,22 +13,39 @@ import javax.persistence.JoinColumn
 class Discussion(
 
     @Column(name="heading")
-    var heading: String,
+    var heading: String? = null,
 
     @Column(name="sub")
-    var sub: String?,
+    var sub: String? = null,
 
     @JoinColumn(name="category_id")
     @ManyToOne
-    var category: Category,
-
-    @OneToMany(mappedBy ="discussion", cascade = [CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH])
-    var posts: MutableSet<Post> = mutableSetOf(),
+    var category: Category? = null,
 
     @JoinColumn(name="user_id")
     @ManyToOne
-    var user: User,
+    var user: User? = null,
+    
+    @OneToMany(mappedBy ="discussion", cascade = [CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH])
+    var posts: MutableSet<Post> = mutableSetOf(),
 
 ): AbstractJpaEntity() {
+
     
+    fun addPost(post: Post): Boolean {
+        return posts.add(post)
+    }
+
+    fun removePost(postId: Long): Boolean {
+
+        val postToRemove: Post = posts.find{post -> post.getId() == postId} ?: return false
+        return posts.remove(postToRemove)
+    }
+
+    fun removePost(post: Post): Boolean {
+        return posts.remove(post)
+    }
+
+
 }
+

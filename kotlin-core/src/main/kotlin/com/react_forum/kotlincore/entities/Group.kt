@@ -13,42 +13,41 @@ import javax.persistence.OneToMany
 class Group(
 
     @Column(name="name")
-    val name: String,
+    var name: String? = null,
 
-    @ManyToMany(cascade = [CascadeType.PERSIST, CascadeType.MERGE])
-    val users: MutableSet<User> = mutableSetOf(),
+    @ManyToMany(cascade = [CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH])
+    var users: MutableSet<User> = mutableSetOf(),
 
-    @OneToMany(mappedBy = "group", cascade = [CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH], orphanRemoval = true)
-    val categories: MutableSet<Category> = mutableSetOf(),
+    @OneToMany(mappedBy = "group", cascade = [CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH])
+    var categories: MutableSet<Category> = mutableSetOf(),
 
-): AbstractJpaEntity()
+): AbstractJpaEntity() {
 
-//############### Extensions ##################
+    fun addUser(user: User): Boolean {
+       return users.add(user)
+    }
 
-fun Group.addUser(user: User): Boolean {
-   return this.users.add(user)
+    fun removeUser(userId: Long): Boolean {
+        val userToRemove: User = users.find{user -> user.getId() == userId} ?: return false
+        return users.remove(userToRemove)
+    }
+
+    fun removeUser(user: User): Boolean {
+        return users.remove(user)
+    }
+
+    fun addCategory(category: Category): Boolean {
+        return categories.add(category)
+    }
+
+    fun removeCategory(categoryId: Long): Boolean {
+        val categoryToRemove: Category = categories.find{category -> category.getId() == categoryId} ?: return false
+        return categories.remove(categoryToRemove)
+    }
+
+    fun removeCategory(category: Category): Boolean {
+        return categories.remove(category)
+    }
+
 }
 
-fun Group.removeUser(userId: Long): Boolean {
-    val checkLength = this.users.size
-    this.users = this.users.filterNot { user -> user.id == userId }
-    return this.users.size = checkLength - 1
-}
-
-fun Group.removeUser(user: User): Boolean {
-    return this.users.remove(user)
-}
-
-fun Group.addCategory(category: Category): Boolean {
-    return this.categories.add(category)
-}
-
-fun Group.removeCategory(categoryId: Long): Boolean {
-    val checkLength = this.categories.size
-    this.categories = this.categories.filterNot { category -> category.id == categoryId }
-    return this.categories.size = checkLength - 1
-}
-
-fun Group.removeCategory(category: Category): Boolean {
-    return this.categories.remove(category)
-}

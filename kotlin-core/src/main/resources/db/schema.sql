@@ -22,10 +22,10 @@ CREATE TABLE users_groups (
         PRIMARY KEY(group_id, user_id),
     CONSTRAINT fk_user_groups_group_id
         FOREIGN KEY(group_id)
-            REFERENCES groups(id) ON DELETE CASCADE,
+            REFERENCES groups(id),
     CONSTRAINT fk_user_groups_user_id
         FOREIGN KEY(user_id)
-            REFERENCES users(id) ON DELETE CASCADE
+            REFERENCES users(id)
 );
 
 CREATE TABLE categories (
@@ -34,7 +34,7 @@ CREATE TABLE categories (
     group_id BIGINT,
     CONSTRAINT fk_categories_group_id
         FOREIGN KEY(group_id)
-            REFERENCES groups(id) ON DELETE CASCADE
+            REFERENCES groups(id)
 );
 
 CREATE TABLE discussions (
@@ -45,10 +45,10 @@ CREATE TABLE discussions (
     user_id BIGINT,
     CONSTRAINT fk_discussions_category_id
         FOREIGN KEY(category_id)
-            REFERENCES categories(id) ON DELETE CASCADE,
+            REFERENCES categories(id),
     CONSTRAINT fk_discussions_user_id
         FOREIGN KEY(user_id)
-            REFERENCES users(id) ON DELETE CASCADE
+            REFERENCES users(id)
 );
 
 CREATE TABLE posts (
@@ -58,8 +58,8 @@ CREATE TABLE posts (
     discussion_id BIGINT,
     CONSTRAINT fk_posts_discussion_id
         FOREIGN KEY(discussion_id)
-            REFERENCES discussions(id) ON DELETE CASCADE,
+            REFERENCES discussions(id),
     CONSTRAINT fk_posts_user_id
         FOREIGN KEY(user_id)
-            REFERENCES users(id) ON DELETE CASCADE
+            REFERENCES users(id)
 );

@@ -11,16 +11,15 @@ import javax.persistence.JoinColumn
 class Post(
 
     @Column(name="content")
-    var content: String,
+    var content: String? = null,
 
     @JoinColumn(name="user_id")
     @ManyToOne
-    var user: User,
+    var user: User? = null,
 
     @JoinColumn(name="discussion_id")
     @ManyToOne
-    var discussion: Discussion,
+    var discussion: Discussion? = null,
 
-): AbstractJpaEntity() {
-    
-}
+): AbstractJpaEntity() 
+

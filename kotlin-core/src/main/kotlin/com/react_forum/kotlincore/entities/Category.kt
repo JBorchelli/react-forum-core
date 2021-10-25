@@ -13,11 +13,11 @@ import javax.persistence.JoinColumn
 class Category(
 
     @Column(name="title")
-    var title: String,
+    var title: String? = null,
 
     @JoinColumn(name="group_id")
     @ManyToOne
-    var group: Group,
+    var group: Group? = null,
 
     @OneToMany(mappedBy = "category",
         cascade = [CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH],
@@ -26,5 +26,20 @@ class Category(
     var discussions: MutableSet<Discussion> = mutableSetOf(),
 
 ): AbstractJpaEntity() {
-    
+
+    fun addDiscussion(discussion: Discussion): Boolean {
+        return discussions.add(discussion)
+    }
+
+    fun removeDiscussion(discussionId: Long): Boolean {
+        val discussionToRemove: Discussion = discussions.find{discussion -> discussion.getId() == discussionId} ?: return false
+        return discussions.remove(discussionToRemove)
+    }
+
+    fun removeDiscussion(discussion: Discussion): Boolean {
+        return discussions.remove(discussion)
+    }
+
 }
+
+

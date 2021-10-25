@@ -15,7 +15,7 @@ import javax.persistence.FetchType
 class User(
 
     @Column(name="username")
-    var username: String,
+    var username: String? = null,
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -41,5 +41,44 @@ class User(
 
 ): AbstractJpaEntity() {
 
+    fun addGroup(group: Group): Boolean {
+       return groups.add(group)
+    }
+
+    fun removeGroup(groupId: Long): Boolean {
+        val groupToRemove: Group = groups.find{group -> group.getId() == groupId} ?: return false
+        return groups.remove(groupToRemove)
+    }
+
+    fun removeGroup(group: Group): Boolean {
+        return groups.remove(group)
+    }
+
+    fun addDiscussion(discussion: Discussion): Boolean {
+        return discussions.add(discussion)
+    }
+
+    fun removeDiscussion(discussionId: Long): Boolean {
+        val discussionToRemove: Discussion = discussions.find{discussion -> discussion.getId() == discussionId} ?: return false
+        return discussions.remove(discussionToRemove)
+    }
+
+    fun removeDiscussion(discussion: Discussion): Boolean {
+        return discussions.remove(discussion)
+    }
+
+    fun addPost(post: Post): Boolean {
+        return posts.add(post)
+    }
+
+    fun removePost(postId: Long): Boolean {
+        val postToRemove: Post = posts.find{post -> post.getId() == postId} ?: return false
+        return posts.remove(postToRemove)
+    }
+
+    fun removePost(post: Post): Boolean {
+        return this.posts.remove(post)
+    }
+
 }
-    
+

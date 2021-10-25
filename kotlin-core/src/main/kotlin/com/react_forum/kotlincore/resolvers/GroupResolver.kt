@@ -14,7 +14,7 @@ class GroupResolver (private val groupService: GroupService): GraphQLResolver<Gr
     //############################################################### 
     
     fun groupsByUser(userId: Long): List<Group> {
-        
+        return  groupService.getGroupsByUser(userId)
     }
 
 
